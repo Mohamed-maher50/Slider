@@ -1,18 +1,42 @@
+let obj = {
+  index: 0,
+};
+
 // dom elements
-let index = 0;
-const sliderImage = document.getElementsByClassName("slider_img");
-const lengthOfImages = sliderImage.length;
+// buttons
 const prevButton = document.querySelector(".slider-prev");
 const nextButton = document.querySelector(".slider-next");
 
+// images
+const sliderImage = document.getElementsByClassName("slider_img");
+const lengthOfImages = sliderImage.length;
+
 // functions
+const render = () => {
+  for (const key of sliderImage) key.classList.remove("active");
+  sliderImage[globalSliderVariables.index].classList.add("active");
+};
 const nextHandler = () => {
-  index < lengthOfImages ? ++index : 0;
+  console.log(globalSliderVariables.index);
+  globalSliderVariables.index < lengthOfImages - 1
+    ? ++globalSliderVariables.index
+    : (globalSliderVariables.index = 0);
 };
 const prevHandler = () => {
-  index > 0 ? --index : (index = lengthOfImages - 1);
+  console.log(globalSliderVariables.index);
+  globalSliderVariables.index > 0
+    ? --globalSliderVariables.index
+    : (globalSliderVariables.index = lengthOfImages - 1);
 };
 
 // implementation
 prevButton.addEventListener("click", prevHandler);
 nextButton.addEventListener("click", nextHandler);
+
+// render
+const globalSliderVariables = new Proxy(obj, {
+  set: function (prev, _, newValue) {
+    prev.index = newValue;
+    render();
+  },
+});
