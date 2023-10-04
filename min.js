@@ -2,7 +2,7 @@ let obj = {
   index: 0,
 };
 
-// dom elements
+// Dom elements
 // buttons
 const prevButton = document.querySelector(".slider-prev");
 const nextButton = document.querySelector(".slider-next");
@@ -11,7 +11,7 @@ const nextButton = document.querySelector(".slider-next");
 const sliderImage = document.getElementsByClassName("slider_img");
 const lengthOfImages = sliderImage.length;
 
-// functions
+// Functions
 const render = () => {
   for (const key of sliderImage) key.classList.remove("active");
   sliderImage[globalSliderVariables.index].classList.add("active");
@@ -37,6 +37,7 @@ nextButton.addEventListener("click", nextHandler);
 const globalSliderVariables = new Proxy(obj, {
   set: function (prev, _, newValue) {
     prev.index = newValue;
+    console.log(obj.index);
     render();
   },
 });
